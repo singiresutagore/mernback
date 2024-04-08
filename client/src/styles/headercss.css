@@ -7,4 +7,8 @@
   .nav-link:hover {
     background-color: orangered;
   }
-  
+  /* styles/headercss.css */
+
+.dropdown-item:hover {
+  background-color: orangered; /* Change this to the desired orange color */
+}
