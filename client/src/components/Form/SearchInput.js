@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSearch } from "../../context/search";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../../styles/searchcss.css" // Import the CSS file
+
 const SearchInput = () => {
   const [values, setValues] = useSearch();
   const navigate = useNavigate();
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSearching(true);
     try {
       const { data } = await axios.get(
         `/api/v1/product/search/${values.keyword}`
@@ -18,6 +22,7 @@ const SearchInput = () => {
       console.log(error);
     }
   };
+
   return (
     <div>
       <form
@@ -33,7 +38,10 @@ const SearchInput = () => {
           value={values.keyword}
           onChange={(e) => setValues({ ...values, keyword: e.target.value })}
         />
-        <button className="btn btn-outline-success" type="submit">
+        <button
+          className={`btn btn-outline-success ${isSearching ? 'searching' : ''}`}
+          type="submit"
+        >
           Search
         </button>
       </form>
